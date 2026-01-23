@@ -7,7 +7,8 @@ package edu.eci.arsw.threads;
 
 /**
  *
- * @author hcadavid
+ * @author Nikolas Martínez Rivera
+ * @author María Belén Quintero
  */
 public class CountThread implements Runnable {
 
