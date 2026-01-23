@@ -5,10 +5,30 @@
  */
 package edu.eci.arsw.threads;
 
+import java.util.Scanner;
+
 /**
  *
  * @author hcadavid
  */
-public class CountThread {
-    
+public class CountThread implements Runnable {
+
+    private int a, b;
+
+    CountThread(int[] interval){
+        setInterval(interval);
+    }
+
+    @Override
+    public void run() {
+        for(int i = a; i<=b; i++){
+            System.out.println(i);
+        }
+    }
+
+    public void setInterval(int [] interval){
+        a = interval[0];
+        b = interval[1];
+    }
+
 }

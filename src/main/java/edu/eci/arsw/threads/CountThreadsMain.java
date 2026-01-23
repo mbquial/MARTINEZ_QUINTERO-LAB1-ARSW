@@ -5,14 +5,26 @@
  */
 package edu.eci.arsw.threads;
 
+import java.lang.reflect.Array;
+
 /**
  *
  * @author hcadavid
  */
 public class CountThreadsMain {
-    
-    public static void main(String a[]){
-        
+
+    public static void main(String args[]){
+        Thread t1 = new Thread(new CountThread(new int[]{0,99}));
+        Thread t2 = new Thread(new CountThread(new int[]{99,199}));
+        Thread t3 = new Thread(new CountThread(new int[]{200,299}));
+
+        t1.run();
+        t2.run();
+        t3.run();
+
+        //t1.start();
+        //t2.start();
+        //t3.start();
     }
     
 }
