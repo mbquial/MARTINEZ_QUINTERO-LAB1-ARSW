@@ -5,8 +5,6 @@
  */
 package edu.eci.arsw.threads;
 
-import java.util.Scanner;
-
 /**
  *
  * @author hcadavid

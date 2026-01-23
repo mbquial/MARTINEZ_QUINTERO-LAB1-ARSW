@@ -5,8 +5,6 @@
  */
 package edu.eci.arsw.threads;
 
-import java.lang.reflect.Array;
-
 /**
  *
  * @author hcadavid
