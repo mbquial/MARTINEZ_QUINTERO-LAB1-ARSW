@@ -10,6 +10,16 @@ public class HostBlackListThread extends Thread{
     private ArrayList<Integer> foundLists;
     private HostBlacklistsDataSourceFacade skds;
 
+    HostBlackListThread(String host, int start, int end, HostBlacklistsDataSourceFacade skds){
+        this.host = host;
+        this.start = start;
+        this.end = end;
+        this.occurrences = 0;
+        this.foundLists = new ArrayList<>();
+        this.skds = skds;
+
+    }
+
     @Override
     public void run(){
         for (int i = start; i <= end; i++){
