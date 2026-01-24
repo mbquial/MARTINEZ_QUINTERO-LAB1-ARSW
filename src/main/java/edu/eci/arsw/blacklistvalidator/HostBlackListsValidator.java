@@ -38,6 +38,28 @@ public class HostBlackListsValidator {
         int listsPerThread = totalList/N;
         int checkedListsCount=0;        
         
+        HostBlackListThread[] threads = new HostBlackListThread[N];
+        for (int i = 0; i < N; i++){
+            int start = i * listsPerThread;
+            int end;
+            if (i == N-1){
+                end = totalList - 1;
+            } else {
+                end = start + listsPerThread - 1;
+            }
+
+            threads[i] = new HostBlackListThread(ipaddress, start, end, skds);
+            threads[i].start();
+        }
+
+        for (int i = 0; i < N; i++){
+            try {
+                threads[i].join();
+            } catch (InterruptedException e) {
+                System.out.println("Thread interrupted :(");
+            }
+        }
+
         if (ocurrencesCount>=BLACK_LIST_ALARM_COUNT){
             skds.reportAsNotTrustworthy(ipaddress);
         }
