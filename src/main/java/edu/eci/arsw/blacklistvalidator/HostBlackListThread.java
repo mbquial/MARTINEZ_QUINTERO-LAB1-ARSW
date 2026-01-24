@@ -9,6 +9,7 @@ public class HostBlackListThread extends Thread{
     private int start, end, occurrences;
     private ArrayList<Integer> foundLists;
     private HostBlacklistsDataSourceFacade skds;
+    private int checkedListsCount;
 
     HostBlackListThread(String host, int start, int end, HostBlacklistsDataSourceFacade skds){
         this.host = host;
@@ -23,6 +24,7 @@ public class HostBlackListThread extends Thread{
     @Override
     public void run(){
         for (int i = start; i <= end; i++){
+            checkedListsCount++;
             if (skds.isInBlackListServer(i, host)){
                 occurrences++;
                 foundLists.add(i);
@@ -36,5 +38,9 @@ public class HostBlackListThread extends Thread{
 
     public ArrayList<Integer> getBlackList(){
         return foundLists;
+    }
+
+    public int getCheckedListCount(){
+        return checkedListsCount;
     }
 }

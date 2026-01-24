@@ -7,7 +7,6 @@ package edu.eci.arsw.blacklistvalidator;
 
 import edu.eci.arsw.spamkeywordsdatasource.HostBlacklistsDataSourceFacade;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -62,10 +61,10 @@ public class HostBlackListsValidator {
             }
         }
 
-        for (HostBlackListThread hostBlackListThread : threads) {
-            ocurrencesCount = ocurrencesCount + hostBlackListThread.getOcurrences();
-            ArrayList<Integer> tempList = hostBlackListThread.getBlackList();
-            blackListOcurrences.addAll(tempList);
+        for (HostBlackListThread hilito : threads) {
+            ocurrencesCount += hilito.getOcurrences();
+            blackListOcurrences.addAll(hilito.getBlackList());
+            checkedListsCount += hilito.getCheckedListCount();
         }
 
         if (ocurrencesCount>=BLACK_LIST_ALARM_COUNT){
