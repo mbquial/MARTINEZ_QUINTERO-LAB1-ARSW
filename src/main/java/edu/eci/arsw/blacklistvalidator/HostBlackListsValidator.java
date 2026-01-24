@@ -14,7 +14,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author hcadavid
+ * @author María Belén Quintero
+ * @author Nikolas Martinez Rivera
  */
 public class HostBlackListsValidator {
 

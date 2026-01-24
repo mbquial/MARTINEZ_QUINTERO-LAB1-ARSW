@@ -1,8 +1,13 @@
 package edu.eci.arsw.blacklistvalidator;
 
 import java.util.ArrayList;
-
 import edu.eci.arsw.spamkeywordsdatasource.HostBlacklistsDataSourceFacade;
+
+/**
+ *
+ * @author María Belén Quintero
+ * @author Nikolas Martinez Rivera
+ */
 
 public class HostBlackListThread extends Thread{
     private String host;
