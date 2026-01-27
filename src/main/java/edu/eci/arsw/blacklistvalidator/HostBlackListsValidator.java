@@ -6,6 +6,7 @@
 package edu.eci.arsw.blacklistvalidator;
 
 import edu.eci.arsw.spamkeywordsdatasource.HostBlacklistsDataSourceFacade;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,7 +14,8 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author hcadavid
+ * @author María Belén Quintero
+ * @author Nikolas Martinez Rivera
  */
 public class HostBlackListsValidator {
 
@@ -29,27 +31,43 @@ public class HostBlackListsValidator {
      * @param ipaddress suspicious host's IP address.
      * @return  Blacklists numbers where the given host's IP address was found.
      */
-    public List<Integer> checkHost(String ipaddress){
+    public List<Integer> checkHost(String ipaddress, int N){
         
         LinkedList<Integer> blackListOcurrences=new LinkedList<>();
-        
         int ocurrencesCount=0;
-        
         HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
+        int totalList = skds.getRegisteredServersCount();
+        int listsPerThread = totalList/N;
+        int checkedListsCount=0;        
         
-        int checkedListsCount=0;
-        
-        for (int i=0;i<skds.getRegisteredServersCount() && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
-            checkedListsCount++;
-            
-            if (skds.isInBlackListServer(i, ipaddress)){
-                
-                blackListOcurrences.add(i);
-                
-                ocurrencesCount++;
+        HostBlackListThread[] threads = new HostBlackListThread[N];
+        for (int i = 0; i < N; i++){
+            int start = i * listsPerThread;
+            int end;
+            if (i == N-1){
+                end = totalList - 1;
+            } else {
+                end = start + listsPerThread - 1;
+            }
+
+            threads[i] = new HostBlackListThread(ipaddress, start, end, skds);
+            threads[i].start();
+        }
+
+        for (int i = 0; i < N; i++){
+            try {
+                threads[i].join();
+            } catch (InterruptedException e) {
+                System.out.println("Thread interrupted :(");
             }
         }
-        
+
+        for (HostBlackListThread hilito : threads) {
+            ocurrencesCount += hilito.getOcurrences();
+            blackListOcurrences.addAll(hilito.getBlackList());
+            checkedListsCount += hilito.getCheckedListCount();
+        }
+
         if (ocurrencesCount>=BLACK_LIST_ALARM_COUNT){
             skds.reportAsNotTrustworthy(ipaddress);
         }

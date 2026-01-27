@@ -7,8 +7,27 @@ package edu.eci.arsw.threads;
 
 /**
  *
- * @author hcadavid
+ * @author Nikolas Martínez Rivera
+ * @author María Belén Quintero
  */
-public class CountThread {
-    
+public class CountThread implements Runnable {
+
+    private int a, b;
+
+    CountThread(int[] interval){
+        setInterval(interval);
+    }
+
+    @Override
+    public void run() {
+        for(int i = a; i<=b; i++){
+            System.out.println(i);
+        }
+    }
+
+    public void setInterval(int [] interval){
+        a = interval[0];
+        b = interval[1];
+    }
+
 }
