@@ -9,7 +9,7 @@
 ## 🧠 Descripción
 
 Este laboratorio introduce los conceptos básicos de **paralelismo y manejo de hilos** en Java, a través del caso de estudio **BlackListSearch**.  
-El objetivo principal es comprender cómo dividir una tarea en múltiples hilos para mejorar el rendimiento y la eficiencia 🙂 .
+El objetivo principal es comprender cómo dividir una tarea en múltiples hilos para mejorar el rendimiento y la eficiencia 🙂.
 
 ---
 
