@@ -39,6 +39,7 @@ public class HostBlackListsValidator {
         int totalList = skds.getRegisteredServersCount();
         int listsPerThread = totalList/N;
         int checkedListsCount=0;        
+        SharedCounter sharedCounter = new SharedCounter(BLACK_LIST_ALARM_COUNT);
         
         HostBlackListThread[] threads = new HostBlackListThread[N];
         for (int i = 0; i < N; i++){
@@ -50,7 +51,7 @@ public class HostBlackListsValidator {
                 end = start + listsPerThread - 1;
             }
 
-            threads[i] = new HostBlackListThread(ipaddress, start, end, skds);
+            threads[i] = new HostBlackListThread(ipaddress, start, end, skds, sharedCounter);
             threads[i].start();
         }
 
