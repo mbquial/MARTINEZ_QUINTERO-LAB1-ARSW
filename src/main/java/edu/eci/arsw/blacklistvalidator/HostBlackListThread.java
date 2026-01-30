@@ -15,24 +15,30 @@ public class HostBlackListThread extends Thread{
     private ArrayList<Integer> foundLists;
     private HostBlacklistsDataSourceFacade skds;
     private int checkedListsCount;
+    private SharedCounter sharedCounter;
 
-    HostBlackListThread(String host, int start, int end, HostBlacklistsDataSourceFacade skds){
+    HostBlackListThread(String host, int start, int end, HostBlacklistsDataSourceFacade skds, SharedCounter sharedCounter){
         this.host = host;
         this.start = start;
         this.end = end;
         this.occurrences = 0;
         this.foundLists = new ArrayList<>();
         this.skds = skds;
-
+        this.sharedCounter = sharedCounter;
     }
 
     @Override
     public void run(){
         for (int i = start; i <= end; i++){
+            if (sharedCounter.shouldStop()){
+                break;
+            }
+            
             checkedListsCount++;
             if (skds.isInBlackListServer(i, host)){
                 occurrences++;
                 foundLists.add(i);
+                sharedCounter.increment();
             }
         }
     }
